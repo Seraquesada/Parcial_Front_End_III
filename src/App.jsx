@@ -6,18 +6,21 @@
 // PROPS: App deberá pasar por props lo necesario a sus componenetes internos.
 import Listado from './components/Listado/Listado.jsx'
 import Cabecera from './components/Cabecera/Cabecera.jsx'
-import data from './components/data.json'
-import { useState , useEffect } from 'react';
+
+import React,{useState} from 'react';
 
 
 const App = () => {
 
-const [stock,setStock] = useState(data);
-  
+  const [carrito, setCarrito] = useState(0);
+  const addCarrito = () => {
+    setCarrito(prevCarrito => prevCarrito + 1)
+  }
+
 return (
     <div className="App">
-        <Cabecera data={data} />
-        <Listado data={data}  />
+        <Cabecera carrito={carrito}  />
+        <Listado addCarrito={addCarrito} />
     </div>
   );
 }

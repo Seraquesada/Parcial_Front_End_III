@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React from 'react'
 
 // El componente Cabera no tiene componentes hijos.
 // ESTADO: Cabecera no tiene estado.
@@ -8,14 +8,13 @@ import React,{useState} from 'react'
 //    h1
 //    p > span     (el span mostrará la cantidad recibida por props)
 
-const Cabecera = ({data}) => {
-  const [carrito, setCarrito] = useState([])
+const Cabecera = ({carrito}) => {
   
   return (
-    <nav>
+    <header>
         <h1>Carrito de compras </h1>
-        <p>Cantidad de productos: <span>{carrito.length}</span></p>
-    </nav>
+        <p>Cantidad de productos: <span>{carrito}</span></p>
+    </header>
   )
 }
 

@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState,useEffect} from 'react'
 
 // El componente Item no tiene componentes hijos.
 // ESTADO: Item debe tener un número para almacenar la cantidad de stock, la misma se la defina el padre a la hora de crearlo.
@@ -10,22 +10,29 @@ import React,{useState, useEffect} from 'react'
 //    h5 > span    (este span debe mostrar la cantidad si es mayor a 0 "agotado" si llega a 0)
 //    button       (este boton debe permitir comprar, pero si la cantidad es menor a 0 debe estar deshabilitado y decir "Sin stock")
 
-const Item = ({nombre, descripcion,stock}) => {
-    const [stockCounter, setStockCounter] = useState(stock);
+const Item = ({nombre,descripcion,stock,addCarrito}) => {
+        
+    const [stockCounter, setStockCounter] = useState()
+        useEffect(()=> {
+            setStockCounter(stock)
+        },[])
     const [buttonDisabled, setButtonDisabled] = useState(false)
     const [buttonText,setButtonText] = useState("Comprar")
 
 
     const handleClick = () => {
-        console.log(typeof stockCounter)
-        if(stockCounter >1){
-            setStockCounter( prevStockCounter => prevStockCounter - 1) 
-        } else{
-            setButtonText("Sin Stock")
-            setButtonDisabled(true);
+        if(stockCounter ===0){
+            setButtonDisabled(true)
+            setButtonText("sin stock")
             setStockCounter("Sin Stock");
+        }else{
+            setStockCounter(prevStockCounter=> prevStockCounter -1)
+            addCarrito();
         }
-        } 
+    } 
+    
+    
+
 
     return (
     <div className='producto'>
@@ -33,11 +40,12 @@ const Item = ({nombre, descripcion,stock}) => {
         <p> {descripcion}</p>
         <h5> En stock:
             <span> {
-                stockCounter
+                    stockCounter
                     }
             </span>
         </h5>
-        <button disabled={buttonDisabled} onClick={handleClick}> {buttonText}</button>
+        
+        <button onClick={handleClick} disabled={buttonDisabled} > {buttonText}</button>
     </div>
     )
 }
