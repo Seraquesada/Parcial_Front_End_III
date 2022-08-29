@@ -13,26 +13,27 @@ import React,{useState,useEffect} from 'react'
 const Item = ({nombre,descripcion,stock,addCarrito}) => {
         
     const [stockCounter, setStockCounter] = useState()
-        useEffect(()=> {
-            setStockCounter(stock)
-        },[])
     const [buttonDisabled, setButtonDisabled] = useState(false)
     const [buttonText,setButtonText] = useState("Comprar")
+        
+    useEffect(()=> {
+        setStockCounter(stock)
+    },[])
 
+    useEffect(()=>{
+            if(stockCounter===0) {
+                setButtonDisabled(true)
+                setButtonText("sin stock")
+                setStockCounter("Sin Stock")
+            }
+        },[stockCounter])
 
     const handleClick = () => {
-        if(stockCounter ===0){
-            setButtonDisabled(true)
-            setButtonText("sin stock")
-            setStockCounter("Sin Stock");
-        }else{
+        if(stockCounter >=1){
             setStockCounter(prevStockCounter=> prevStockCounter -1)
             addCarrito();
         }
     } 
-    
-    
-
 
     return (
     <div className='producto'>
